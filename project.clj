@@ -13,7 +13,7 @@
     :builds [{:id "scampage"
               :source-paths ["src"]
               :compiler {
-                :output-to "scampage.js"
-                :output-dir "out"
-                :optimizations :none
-                :source-map true}}]})
+                         :output-to "scampage.js"
+                         :output-dir "out"
+                         :optimizations :none
+                         :source-map true}}]})
