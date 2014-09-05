@@ -2,19 +2,64 @@
 
 (enable-console-print!)
 
-(println "Hello world!")
 
 (defn switch-to-scene [name]
   (.enterScene js/Crafty name))
 
+(defn make-scene [name init-fn uninit-fn]
+  (.scene js/Crafty name init-fn uninit-fn))
 
-;;(make-scene "Game" game-scene game-scene-uninit)
+(defn make-init-fn [init-fn requires]
+  (fn []
+    (this-as me
+             (.requires me requires)
+             (init-fn me))))
+
+(defn make-component [name init-fn requires additional-fns]
+  (.c js/Crafty name
+                  (clj->js
+                   (merge 
+                    {:init (make-init-fn init-fn requires)}
+                    additional-fns))))
+(defn set-attr [entity attributes]
+  (.attr entity (clj->js attributes)))
+
+(defn set-color
+([entity color alpha]
+                   (.color entity color alpha)) 
+
+([entity color]
+                   (.color entity color)))
+
+(defn set-image [this image repeat]
+  (.image this image repeat))
+
+(defn make-entity [name]
+  (let [entity
+        (.e js/Crafty name)]
+    entity))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn init-pavement [this]
+  (set-attr this {:x 0 :y (- 320 (+ 32 64)) :w 480 :h 64})
+  (set-image this "assets/pavementperspective.png" "repeat-x"))
+
+(defn init-road [this]
+  (set-attr this {:x 0 :y (- 320 64) :w 480 :h 64})
+;;  (set-color this "rgb(55,55,55)")
+  (set-image this "assets/road.png" "repeat-x"))
+
+(make-component "Road" init-road "2D, Canvas, Image, Polygon" {})
+(make-component "Pavement" init-pavement "2D, Canvas, Image, Polygon" {})
+
+(make-scene "Game" (fn []
+                     (make-entity "Pavement")
+                     (make-entity "Road")) {})
 
 (defn start-game []
   (.init js/Crafty 480 320)
   (.background js/Crafty "#6698FF")
-  ;;(switch-to-scene "Intro")
-  )
+  (switch-to-scene "Game"))
 
 (.addEventListener js/window "load" start-game)
 
