@@ -60,13 +60,13 @@
   (set-image this "assets/road.png" "repeat-x"))
 
 (defn init-lizzy [this]
-  (set-attr this {:x 0 :y 0 :w 195 :h 256})
+  (set-attr this {:x 0 :y 0 :w 97 :h 128})
 ;;(set-color this "rgb(0,55,0)")
 (two-way this 4 4)
 (gravity this "Road")
 (create-reel this "idle" 1000 [[0 0] [1 0]])
-(animate-loop this "idle")
-  )
+(animate-loop this "idle"))
+
 (make-component "Road" init-road "2D, Canvas, Image, Polygon" {})
 (make-component "Pavement" init-pavement "2D, Canvas, Image, Polygon" {})
 (make-component "Lizzy" init-lizzy "2D, Canvas, Polygon, Twoway,Gravity,spr_lizzy,SpriteAnimation" {})
