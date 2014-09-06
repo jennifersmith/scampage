@@ -10,6 +10,10 @@ it.
 
 Also I have on my list of goals to 'make a game' so maybe this is that.
 
+## Assets
+
+http://opengameart.org/content/orange-fat-cat
+
 ## License
 
 The MIT License (MIT)
