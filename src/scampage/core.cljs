@@ -39,8 +39,11 @@
         (.e js/Crafty name)]
     entity))
 
-(defn two-way [this speed]
-  (.twoway this speed))
+(defn two-way [this speed jump-speed]
+  (.twoway this speed jump-speed))
+
+(defn gravity [this stopping-component]
+  (.gravity this stopping-component))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defn init-pavement [this]
@@ -55,11 +58,12 @@
 (defn init-lizzy [this]
   (set-attr this {:x 0 :y (- 320 128 32) :w 64 :h 128})
 (set-color this "rgb(0,55,0)")
-(two-way this 4)
+(two-way this 4 4)
+(gravity this "Road")
   )
 (make-component "Road" init-road "2D, Canvas, Image, Polygon" {})
 (make-component "Pavement" init-pavement "2D, Canvas, Image, Polygon" {})
-(make-component "Lizzy" init-lizzy "2D, Canvas, Color, Polygon, Twoway" {})
+(make-component "Lizzy" init-lizzy "2D, Canvas, Color, Polygon, Twoway,Gravity" {})
 
 (make-scene "Game" (fn []
                      (make-entity "Pavement")
