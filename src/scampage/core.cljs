@@ -45,6 +45,10 @@
 (defn gravity [this stopping-component]
   (.gravity this stopping-component))
 
+(defn create-reel [this reel-id speed frames]
+  (.reel this reel-id 1000 (clj->js frames)))
+(defn animate-loop [this reel-id]
+  (.animate this reel-id, -1))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defn init-pavement [this]
   (set-attr this {:x 0 :y (- 320 (+ 32 64)) :w 480 :h 64})
@@ -60,8 +64,8 @@
 ;;(set-color this "rgb(0,55,0)")
 (two-way this 4 4)
 (gravity this "Road")
-(.reel this "idle" 1000 (clj->js [[0 0] [1 0]]))
-(.animate this "idle", -1)
+(create-reel this "idle" 1000 [[0 0] [1 0]])
+(animate-loop this "idle")
   )
 (make-component "Road" init-road "2D, Canvas, Image, Polygon" {})
 (make-component "Pavement" init-pavement "2D, Canvas, Image, Polygon" {})
