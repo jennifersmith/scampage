@@ -56,14 +56,16 @@
   (set-image this "assets/road.png" "repeat-x"))
 
 (defn init-lizzy [this]
-  (set-attr this {:x 0 :y (- 320 138 32) :w 106 :h 138})
+  (set-attr this {:x 0 :y 0 :w 195 :h 256})
 ;;(set-color this "rgb(0,55,0)")
 (two-way this 4 4)
 (gravity this "Road")
+(.reel this "idle" 1000 (clj->js [[0 0] [1 0]]))
+(.animate this "idle", -1)
   )
 (make-component "Road" init-road "2D, Canvas, Image, Polygon" {})
 (make-component "Pavement" init-pavement "2D, Canvas, Image, Polygon" {})
-(make-component "Lizzy" init-lizzy "2D, Canvas, Polygon, Twoway,Gravity,spr_lizzy" {})
+(make-component "Lizzy" init-lizzy "2D, Canvas, Polygon, Twoway,Gravity,spr_lizzy,SpriteAnimation" {})
 
 (make-scene "Game" (fn []
                      (make-entity "Pavement")
