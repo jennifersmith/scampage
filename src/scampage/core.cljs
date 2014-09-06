@@ -56,14 +56,14 @@
   (set-image this "assets/road.png" "repeat-x"))
 
 (defn init-lizzy [this]
-  (set-attr this {:x 0 :y (- 320 128 32) :w 64 :h 128})
-(set-color this "rgb(0,55,0)")
+  (set-attr this {:x 0 :y (- 320 138 32) :w 106 :h 138})
+;;(set-color this "rgb(0,55,0)")
 (two-way this 4 4)
 (gravity this "Road")
   )
 (make-component "Road" init-road "2D, Canvas, Image, Polygon" {})
 (make-component "Pavement" init-pavement "2D, Canvas, Image, Polygon" {})
-(make-component "Lizzy" init-lizzy "2D, Canvas, Color, Polygon, Twoway,Gravity" {})
+(make-component "Lizzy" init-lizzy "2D, Canvas, Polygon, Twoway,Gravity,spr_lizzy" {})
 
 (make-scene "Game" (fn []
                      (make-entity "Pavement")
@@ -73,7 +73,8 @@
 (defn start-game []
   (.init js/Crafty 480 320)
   (.background js/Crafty "#6698FF")
-  (switch-to-scene "Game"))
+  (js/loadStuff
+   #(switch-to-scene "Game")))
 
 (.addEventListener js/window "load" start-game)
 

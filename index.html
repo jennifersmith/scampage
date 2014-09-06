@@ -4,5 +4,33 @@
         <script src="out/goog/base.js" type="text/javascript"></script>
         <script src="scampage.js" type="text/javascript"></script>
         <script type="text/javascript">goog.require("scampage.core");</script>
+        <script type="application/javascript">
+          var loadStuff = function(andThen){
+ 	  Crafty.load([
+	  'assets/lizzywalkright.png'
+	  ], function(){
+	  // Once the images are loaded...
+          
+	  // Define the individual sprites in the image
+	  // Each one (spr_tree, etc.) becomes a component
+	  // These components' names are prefixed with "spr_"
+	  //  to remind us that they simply cause the entity
+	  //  to be drawn with a certain sprite
+	  //Crafty.sprite(16, 'assets/16x16_forest_2.gif', {
+	  //spr_tree:    [0, 0],
+	  //spr_bush:    [1, 0],
+	  //spr_village: [0, 1],
+	  //spr_rock:    [1, 1]
+	  //});
+          
+	  // Define the PC's sprite to be the first sprite in the third row of the
+	  //  animation sprite map
+	  Crafty.sprite(157,207, 'assets/lizzywalkright.png', {
+	  spr_lizzy:  [0, 2],
+	  });
+          andThen();
+          });
+}
+          </script>
     </body>
 </html>
