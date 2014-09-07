@@ -46,9 +46,11 @@
   (.gravity this stopping-component))
 
 (defn create-reel [this reel-id speed frames]
-  (.reel this reel-id 1000 (clj->js frames)))
+  (.reel this reel-id speed (clj->js frames)))
 (defn animate-loop [this reel-id]
   (.animate this reel-id, -1))
+(defn bind [this event-name handler]
+  (.bind this event-name handler))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defn init-pavement [this]
   (set-attr this {:x 0 :y (- 320 (+ 32 64)) :w 480 :h 64})
@@ -59,13 +61,21 @@
 ;;  (set-color this "rgb(55,55,55)")
   (set-image this "assets/road.png" "repeat-x"))
 
+(defn handle-new-dir [this data]
+  (let [x (data "x")]
+    (if (== 0 x)
+      (animate-loop this "idle")
+      (animate-loop this "walking"))))
+
 (defn init-lizzy [this]
   (set-attr this {:x 0 :y 0 :w 97 :h 128})
 ;;(set-color this "rgb(0,55,0)")
 (two-way this 4 4)
 (gravity this "Road")
 (create-reel this "idle" 1000 [[0 0] [1 0]])
-(animate-loop this "idle"))
+(create-reel this "walking" 1000 (clj->js (take 19 (map #(vector % 0) (range)))))
+(animate-loop this "idle")
+(bind this "NewDirection" #(handle-new-dir this (js->clj %))))
 
 (make-component "Road" init-road "2D, Canvas, Image, Polygon" {})
 (make-component "Pavement" init-pavement "2D, Canvas, Image, Polygon" {})
